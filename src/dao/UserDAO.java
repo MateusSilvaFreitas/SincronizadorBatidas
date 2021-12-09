@@ -12,10 +12,10 @@ public class UserDAO {
         try{
             Connection connection = ConnectionFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select u.token, qntdTempoCiclo, qntdCiclosInativo from usuarios u inner join config c on c.id = u.id_config_usuario where u.token = '" + token + "'");
+            ResultSet result = statement.executeQuery("select u.token, qntdTempoCiclo, qntdCiclosInativo, u.id from usuarios u inner join config c on c.id = u.id_config_usuario where u.token = '" + token + "'");
 
             while (result.next()){
-                return new DadosUsuarioDTO(result.getString(1), result.getInt(2), result.getInt(3));
+                return new DadosUsuarioDTO(result.getString(1), result.getInt(2), result.getInt(3), result.getLong(4));
             }
         }catch(Exception e){
             e.printStackTrace();

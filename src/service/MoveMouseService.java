@@ -20,7 +20,7 @@ public class MoveMouseService {
 	Long qntdTempoUltimaAcao = 0l;
 	Long maiorTempoInativo = 0l;
 
-	public void verificarMouse(long tempo, long capturasInativo) {
+	public void verificarMouse(long tempo, long capturasInativo, long idUsuario) {
 		LocalDateTime horarioBatidaInicio = LocalDateTime.now();
 		Timer timer = new Timer("chupa-cabra");
 		TimerTask task = new TimerTask() {
@@ -29,7 +29,6 @@ public class MoveMouseService {
 			public void run() {
 				var actual = MouseInfo.getPointerInfo().getLocation();
 				if(actual.equals(old)) {
-					System.out.println("service.Mouse Parado");
 					qntdVezesParado++;
 				} else {
 					old = actual;
@@ -37,15 +36,14 @@ public class MoveMouseService {
 					tempoUltimaAcao = System.currentTimeMillis();
 				}
 				if(qntdVezesParado > capturasInativo) {
-					qntdTempoInativo += System.currentTimeMillis() - tempoUltimaAcao;
-					qntdTempoUltimaAcao = System.currentTimeMillis() - tempoUltimaAcao;
+					qntdTempoInativo += tempo;
+					qntdTempoUltimaAcao = tempo * qntdVezesParado;
 					if(qntdTempoUltimaAcao > maiorTempoInativo){
 						maiorTempoInativo = qntdTempoUltimaAcao;
 					}
 				}
-				System.out.println("Tempo inativo: " + qntdTempoUltimaAcao / 1000 + " segundos");
 				try {
-					JsonService.gravaArquivoJSONInatividade(new DadosBatidaDTO(horarioBatidaInicio, null, maiorTempoInativo / 1000, qntdTempoInativo / 1000));
+					JsonService.gravaArquivoJSONInatividade(new DadosBatidaDTO(horarioBatidaInicio, null, maiorTempoInativo, qntdTempoInativo, idUsuario));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

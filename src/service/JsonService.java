@@ -21,19 +21,15 @@ public class JsonService {
         obj.put("token", dadosUsuarioDTO.getToken());
         obj.put("quantidadeTempoCiclo", dadosUsuarioDTO.getQuantidadeTempoCiclo());
         obj.put("ciclosInativo", dadosUsuarioDTO.getCiclosInativo());
+        obj.put("idUsuario", dadosUsuarioDTO.getIdUsuario());
         try {
-            fileWriter = new FileWriter("./data.json");
+            fileWriter = new FileWriter("C:/Ponto/data.json");
             fileWriter.write(obj.toJSONString());
-
+            fileWriter.flush();
+            fileWriter.close();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Erro ao gravar arquivo: " + e.getMessage());
-        } finally {
-            try {
-                fileWriter.flush();
-                fileWriter.close();
-            } catch (Exception e) {
-                throw new Exception("Erro ao fechar arquivo: " + e.getMessage());
-            }
         }
     }
     public static void gravaArquivoJSONInatividade(DadosBatidaDTO dadosBatidaDTO) throws Exception {
@@ -42,26 +38,22 @@ public class JsonService {
         obj.put("batidaFim", dadosBatidaDTO.getHorarioBatidaFim());
         obj.put("inatividadeTotal", dadosBatidaDTO.getInatividadeTotal());
         obj.put("maiorTempoInatividade", dadosBatidaDTO.getMaiorTempoInatividade());
+        obj.put("idUsuario", dadosBatidaDTO.getIdUsuario());
         obj.put("hashUnico", dadosBatidaDTO.hashCode());
         try {
-            fileWriter = new FileWriter("./dadosBatida.json");
+            fileWriter = new FileWriter("C:/Ponto/dadosBatida.json");
             fileWriter.write(obj.toJSONString());
-
+            fileWriter.flush();
+            fileWriter.close();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Erro ao gravar arquivo: " + e.getMessage());
-        } finally {
-            try {
-                fileWriter.flush();
-                fileWriter.close();
-            } catch (Exception e) {
-                throw new Exception("Erro ao fechar arquivo: " + e.getMessage());
-            }
         }
     }
 
     public static DadosBatidaDTO verificaJsonBatida() throws Exception {
         try{
-            File json = new File("./dadosBatida.json");
+            File json = new File("C:/Ponto/dadosBatida.json");
             fileReader = new FileReader(json);
             BufferedReader leitor = new BufferedReader(fileReader);
             JSONParser parser = new JSONParser();
@@ -69,8 +61,9 @@ public class JsonService {
             return new DadosBatidaDTO(
                     LocalDateTime.parse(jsonFormatado.get("batidaInicio").toString()),
                     null,
-                    Long.parseLong(jsonFormatado.get("inatividadeTotal").toString()),
                     Long.parseLong(jsonFormatado.get("maiorTempoInatividade").toString()),
+                    Long.parseLong(jsonFormatado.get("inatividadeTotal").toString()),
+                    Long.parseLong(jsonFormatado.get("idUsuario").toString()),
                     jsonFormatado.get("hashUnico").toString()
             );
         } catch (Exception e) {
@@ -80,12 +73,12 @@ public class JsonService {
 
     public static DadosUsuarioDTO verificaJsonUsuario() throws Exception {
         try{
-            File json = new File("./data.json");
+            File json = new File("C:/Ponto/data.json");
             fileReader = new FileReader(json);
             BufferedReader leitor = new BufferedReader(fileReader);
             JSONParser parser = new JSONParser();
             JSONObject jsonFormatado = (JSONObject) parser.parse(leitor.readLine());
-            return new DadosUsuarioDTO(jsonFormatado.get("token").toString(), Integer.parseInt(jsonFormatado.get("quantidadeTempoCiclo").toString()), Integer.parseInt(jsonFormatado.get("ciclosInativo").toString()));
+            return new DadosUsuarioDTO(jsonFormatado.get("token").toString(), Integer.parseInt(jsonFormatado.get("quantidadeTempoCiclo").toString()), Integer.parseInt(jsonFormatado.get("ciclosInativo").toString()), Long.parseLong(jsonFormatado.get("idUsuario").toString()));
         } catch (Exception e) {
             throw new Exception("Ocorreu um erro ao ler o arquivo de usuário");
         }

@@ -8,21 +8,24 @@ public class DadosBatidaDTO {
     private Long maiorTempoInatividade;
     private Long inatividadeTotal;
     private String hashUnico;
+    private Long idUsuario;
 
     public DadosBatidaDTO(){}
 
-    public DadosBatidaDTO(LocalDateTime horarioBatidaInicio, LocalDateTime horarioBatidaFim, Long maiorTempoInatividade, Long inatividadeTotal) {
+    public DadosBatidaDTO(LocalDateTime horarioBatidaInicio, LocalDateTime horarioBatidaFim, Long maiorTempoInatividade, Long inatividadeTotal, Long idUsuario) {
         this.horarioBatidaInicio = horarioBatidaInicio;
         this.horarioBatidaFim = horarioBatidaFim;
         this.maiorTempoInatividade = maiorTempoInatividade;
         this.inatividadeTotal = inatividadeTotal;
+        this.idUsuario = idUsuario;
     }
-    public DadosBatidaDTO(LocalDateTime horarioBatidaInicio, LocalDateTime horarioBatidaFim, Long maiorTempoInatividade, Long inatividadeTotal, String hashUnico) {
+    public DadosBatidaDTO(LocalDateTime horarioBatidaInicio, LocalDateTime horarioBatidaFim, Long maiorTempoInatividade, Long inatividadeTotal, Long idUsuario,String hashUnico) {
         this.horarioBatidaInicio = horarioBatidaInicio;
         this.horarioBatidaFim = horarioBatidaFim;
         this.maiorTempoInatividade = maiorTempoInatividade;
         this.inatividadeTotal = inatividadeTotal;
         this.hashUnico = hashUnico;
+        this.idUsuario = idUsuario;
     }
 
     public LocalDateTime getHorarioBatidaInicio() {
@@ -63,5 +66,13 @@ public class DadosBatidaDTO {
 
     public void setHashUnico(String hashUnico) {
         this.hashUnico = hashUnico;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
