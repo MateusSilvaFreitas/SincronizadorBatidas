@@ -8,7 +8,8 @@ Every position from mouse cursor are calculated and will give the anwser, how ma
 
 After pass the token created by admins, you have the option to start count the inactivity.
 
-The rest of applicattion are on this links:
+The rest of applicattion are on this links: 
+
 Front-end → https://github.com/MateusSilvaFreitas/SincronizadorBatidas-Front-END 
 
 Back-end → https://github.com/L4nex/projeto-integrador
