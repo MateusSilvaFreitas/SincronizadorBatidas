@@ -14,6 +14,8 @@ public class main {
 
     static UserDAO dao = new UserDAO();
     static BatidaDAO batidaDAO = new BatidaDAO();
+    private static boolean iniciouContagem = false;
+
 
     public static void main(String[] args) throws Exception {
         DadosUsuarioDTO dadosUsuarioDTO;
@@ -71,6 +73,7 @@ public class main {
             public void actionPerformed(ActionEvent e){
                 label.setBounds(50,50, 200,70);
                 label.setText("Lendo todos os seus movimentos...");
+                iniciouContagem = true;
                 mainframe.remove(b);
                 mainframe.add(bFechar);
                 MoveMouseService mouse = new MoveMouseService();
@@ -100,7 +103,7 @@ public class main {
 
 
             try {
-                Image image = Toolkit.getDefaultToolkit().getImage("C:/Ponto/TrayIcon.png");
+                Image image = Toolkit.getDefaultToolkit().getImage("C:/Ponto/data/TrayIcon.png");
                 iconeTray = new TrayIcon(image);
                 iconeTray.setImageAutoSize(true);
             } catch (Exception ex) {
@@ -137,10 +140,12 @@ public class main {
     }
 
     private static void finalizarPrograma() {
-        try {
-            recuperaEGravaBatida();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar as informações");
+        if(iniciouContagem) {
+            try {
+                recuperaEGravaBatida();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar as informações");
+            }
         }
         System.exit(0);
     }

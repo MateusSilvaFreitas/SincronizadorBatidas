@@ -23,7 +23,7 @@ public class JsonService {
         obj.put("ciclosInativo", dadosUsuarioDTO.getCiclosInativo());
         obj.put("idUsuario", dadosUsuarioDTO.getIdUsuario());
         try {
-            fileWriter = new FileWriter("C:/Ponto/data.json");
+            fileWriter = new FileWriter("C:/Ponto/data/data.json");
             fileWriter.write(obj.toJSONString());
             fileWriter.flush();
             fileWriter.close();
@@ -41,7 +41,7 @@ public class JsonService {
         obj.put("idUsuario", dadosBatidaDTO.getIdUsuario());
         obj.put("hashUnico", dadosBatidaDTO.hashCode());
         try {
-            fileWriter = new FileWriter("C:/Ponto/dadosBatida.json");
+            fileWriter = new FileWriter("C:/Ponto/data/dadosBatida.json");
             fileWriter.write(obj.toJSONString());
             fileWriter.flush();
             fileWriter.close();
@@ -53,7 +53,7 @@ public class JsonService {
 
     public static DadosBatidaDTO verificaJsonBatida() throws Exception {
         try{
-            File json = new File("C:/Ponto/dadosBatida.json");
+            File json = new File("C:/Ponto/data/dadosBatida.json");
             fileReader = new FileReader(json);
             BufferedReader leitor = new BufferedReader(fileReader);
             JSONParser parser = new JSONParser();
@@ -73,7 +73,7 @@ public class JsonService {
 
     public static DadosUsuarioDTO verificaJsonUsuario() throws Exception {
         try{
-            File json = new File("C:/Ponto/data.json");
+            File json = new File("C:/Ponto/data/data.json");
             fileReader = new FileReader(json);
             BufferedReader leitor = new BufferedReader(fileReader);
             JSONParser parser = new JSONParser();
